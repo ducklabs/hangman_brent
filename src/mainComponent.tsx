@@ -2,9 +2,10 @@ import React from 'react';
 import './App.css';
 import * as Bootstrap from 'react-bootstrap';
 import { DropdownList } from 'react-widgets';
-import { categories } from './hangmanconstants';
 import HangmanImage from './hangmanImageComponent';
+import categoriesJson from './words.json';
 
+let categories: Record<string, Array<string>>  = categoriesJson
 
 interface OwnProps {
 }
@@ -37,13 +38,14 @@ class MainComponent extends React.PureComponent<Props, State> {
     }
 
     private getCategories(): string[] {
-        return Object.keys(categories)
-          .filter(k => typeof categories[k as any] === "number") as string[];
+        return Object.keys(categories);
       }
       
-      private displayWordFromCategory(val: string) {
-        console.log(val);
-        return "im the word";
+      private displayWordFromCategory(category: string): string {
+        let possibleWords = categories[category];
+        let chosenWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+        console.log('Random word:', chosenWord);
+        return chosenWord;
       }
 
       private increaseNumber(){
@@ -80,7 +82,7 @@ class MainComponent extends React.PureComponent<Props, State> {
                     <Bootstrap.Col></Bootstrap.Col>
                 </Bootstrap.Row>
             <Bootstrap.Row className={"hangmanImage"}>
-                <Bootstrap.Col md={5}></Bootstrap.Col>
+                <Bootstrap.Col md={4}></Bootstrap.Col>
                 <Bootstrap.Col>
                     <HangmanImage wrongCount={this.state.wrongCount}/>
                 </Bootstrap.Col>
