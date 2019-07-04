@@ -6,16 +6,30 @@ interface OwnProps {
     checkGuess: (guess: string) => void;
 }
 
+interface State {
+    error: string;
+}
+
 type Props = OwnProps;
 
-class GuessComponent extends React.PureComponent<Props, any> {
+class GuessComponent extends React.PureComponent<Props, State> {
     public constructor(props: any, context: any) {
         super(props, context);
+        this.state = {
+            error: ""
+        }
         this.captureGuess = this.captureGuess.bind(this);
     }
 
     private captureGuess(value: any) {
-        this.props.checkGuess(value.currentTarget.value.toUpperCase())
+        const isNum = isNaN(value.target.value); //.toUpperCase()
+        if (isNum) {
+            this.props.checkGuess(value.target.value.toUpperCase());
+            this.setState({ error: ""});
+        } else {
+            this.setState({ error: "Only Letters may be selected"});
+        }
+        
     }
 
     render() {
@@ -44,10 +58,16 @@ class GuessComponent extends React.PureComponent<Props, any> {
                 placeholder="Letter"
                 aria-label="Guess Letter"
                 aria-describedby="basic-addon2"
-                onBlur={(event: any) => this.captureGuess(event)}
+                onChange={(event: any) => this.captureGuess(event)}
+                value={""}
                 />
             </Bootstrap.InputGroup>
             </Bootstrap.Col>
+            <Bootstrap.Col></Bootstrap.Col>
+        </Bootstrap.Row>
+        <Bootstrap.Row>
+            <Bootstrap.Col></Bootstrap.Col>
+            <Bootstrap.Col><Bootstrap.Badge variant="warning">{this.state.error}</Bootstrap.Badge></Bootstrap.Col>
             <Bootstrap.Col></Bootstrap.Col>
         </Bootstrap.Row>
         
