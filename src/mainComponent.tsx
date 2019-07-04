@@ -4,8 +4,8 @@ import * as Bootstrap from 'react-bootstrap';
 import { DropdownList } from 'react-widgets';
 import HangmanImage from './hangmanImageComponent';
 import ClueComponent from './clueComponent';
-import categoriesJson from './words.json';
 import GuessComponent from "./guessComponent";
+import categoriesJson from './words.json';
 
 let categories: Record<string, Array<string>>  = categoriesJson
 
@@ -15,7 +15,6 @@ interface OwnProps {
 interface State {
     wrongCount: number;
     randomWord: string;
-    guessedLetters: string[];
 }
 
 type Props = OwnProps;
@@ -25,38 +24,35 @@ class MainComponent extends React.PureComponent<Props, State> {
         super(props, context);
         this.state = {
             wrongCount: 0,
-            randomWord: "",
-            guessedLetters: []
-
+            randomWord: "Brent"
         }
         this.getCategories = this.getCategories.bind(this);
-        this.displayWordFromCategory = this.displayWordFromCategory.bind(this);
+        this.randomWordFromCategory = this.randomWordFromCategory.bind(this);
         this.increaseNumber = this.increaseNumber.bind(this);
         this.checkGuess = this.checkGuess.bind(this);
     }
 
     private checkGuess(letter: string) {
-        const newGuessList = this.state.guessedLetters;
-        newGuessList.push(letter);
-        this.setState({ guessedLetters: newGuessList });
+        if (this.state.randomWord.indexOf(letter) > -1)
+        {
+            alert("hello found inside your_string");
+        }
     }
 
     private getCategories(): string[] {
-        return Object.keys(categories);
-      }
+      return Object.keys(categories);
+    }
 
-      private displayWordFromCategory(category: string): string {
-        let possibleWords = categories[category];
-        let chosenWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
-        this.setState({ randomWord: chosenWord });
-        return chosenWord;
-      }
+    private randomWordFromCategory(category: string) {
+      let possibleWords = categories[category];
+      let chosenWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+      this.setState({randomWord: chosenWord})
+    }
 
-      private increaseNumber(){
-
-          let newValue = this.state.wrongCount < 10 ? this.state.wrongCount + 1 : 10;
-            this.setState({ wrongCount: newValue})
-      }
+    private increaseNumber(){
+      let newValue = this.state.wrongCount < 10 ? this.state.wrongCount + 1 : 10;
+        this.setState({ wrongCount: newValue})
+    }
 
     render() {
         return (
@@ -79,13 +75,11 @@ class MainComponent extends React.PureComponent<Props, State> {
                         <Bootstrap.FormLabel>Select Category</Bootstrap.FormLabel>
                         <DropdownList
                             data={this.getCategories()}
-                            onChange={(val) => this.displayWordFromCategory(val)}
+                            onChange={(val) => this.randomWordFromCategory(val)}
                             textField=""
                             />
                     </Bootstrap.Col>
-                    <Bootstrap.Col>
-                        <GuessComponent guessedLetters={this.state.guessedLetters} checkGuess={this.checkGuess}/>
-                    </Bootstrap.Col>
+                    <Bootstrap.Col></Bootstrap.Col>
                 </Bootstrap.Row>
             <Bootstrap.Row className={"hangmanImage"}>
                 <Bootstrap.Col md={4}></Bootstrap.Col>
@@ -97,7 +91,7 @@ class MainComponent extends React.PureComponent<Props, State> {
             <Bootstrap.Row className={"clueComponent"}>
                 <Bootstrap.Col md={4}></Bootstrap.Col>
                 <Bootstrap.Col>
-                    <ClueComponent randomWord={'Hello there'} guessedLetters={['H','E', 'O']}/>
+                    <ClueComponent randomWord={this.state.randomWord} guessedLetters={['H','E', 'O']}/>
                 </Bootstrap.Col>
                 <Bootstrap.Col></Bootstrap.Col>
             </Bootstrap.Row>
