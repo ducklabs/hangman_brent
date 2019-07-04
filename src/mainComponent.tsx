@@ -3,6 +3,7 @@ import './App.css';
 import * as Bootstrap from 'react-bootstrap';
 import { DropdownList } from 'react-widgets';
 import HangmanImage from './hangmanImageComponent';
+import ClueComponent from './clueComponent';
 import categoriesJson from './words.json';
 
 let categories: Record<string, Array<string>>  = categoriesJson
@@ -40,7 +41,7 @@ class MainComponent extends React.PureComponent<Props, State> {
     private getCategories(): string[] {
         return Object.keys(categories);
       }
-      
+
       private displayWordFromCategory(category: string): string {
         let possibleWords = categories[category];
         let chosenWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
@@ -49,7 +50,7 @@ class MainComponent extends React.PureComponent<Props, State> {
       }
 
       private increaseNumber(){
-          
+
           let newValue = this.state.wrongCount < 10 ? this.state.wrongCount + 1 : 10;
             this.setState({ wrongCount: newValue})
       }
@@ -77,7 +78,7 @@ class MainComponent extends React.PureComponent<Props, State> {
                             data={this.getCategories()}
                             onChange={(val) => this.displayWordFromCategory(val)}
                             textField=""
-                            />  
+                            />
                     </Bootstrap.Col>
                     <Bootstrap.Col></Bootstrap.Col>
                 </Bootstrap.Row>
@@ -85,6 +86,13 @@ class MainComponent extends React.PureComponent<Props, State> {
                 <Bootstrap.Col md={4}></Bootstrap.Col>
                 <Bootstrap.Col>
                     <HangmanImage wrongCount={this.state.wrongCount}/>
+                </Bootstrap.Col>
+                <Bootstrap.Col></Bootstrap.Col>
+            </Bootstrap.Row>
+            <Bootstrap.Row className={"clueComponent"}>
+                <Bootstrap.Col md={4}></Bootstrap.Col>
+                <Bootstrap.Col>
+                    <ClueComponent randomWord={'Hello there'} guessedLetters={['H','E', 'O']}/>
                 </Bootstrap.Col>
                 <Bootstrap.Col></Bootstrap.Col>
             </Bootstrap.Row>
