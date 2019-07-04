@@ -14,8 +14,6 @@ class HangmanImage extends React.PureComponent<Props, any> {
     }
 
     private getCorrectImage(index: number) {
-        console.log(this.props.wrongCount);
-
         return "./images/hang" + index.toString() + ".gif";
     }
 
