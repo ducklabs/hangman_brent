@@ -36,9 +36,7 @@ class MainComponent extends React.PureComponent<Props, State> {
     }
 
     private checkGuess(letter: string) {
-        const newGuessList = this.state.guessedLetters;
-        newGuessList.push(letter);
-        this.setState({ guessedLetters: newGuessList });
+        this.setState({ guessedLetters: [...this.state.guessedLetters, letter]})
     }
 
     private getCategories(): string[] {
@@ -61,11 +59,6 @@ class MainComponent extends React.PureComponent<Props, State> {
     render() {
         return (
         <div>
-            <Bootstrap.Row>
-                <Bootstrap.Col>
-                    <Bootstrap.Button  onClick={this.increaseNumber}>increase Test</Bootstrap.Button>
-                </Bootstrap.Col>
-            </Bootstrap.Row>
             <Bootstrap.Row>
                 <Bootstrap.Col></Bootstrap.Col>
                 <Bootstrap.Col md={2}>

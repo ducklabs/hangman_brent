@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as Bootstrap from 'react-bootstrap';
-// import { } from 'react-widgets';
 
 interface OwnProps {
     guessedLetters: string[];
@@ -20,8 +19,8 @@ class GuessComponent extends React.PureComponent<Props, any> {
     }
 
     render() {
-        debugger;
-      return  (         <div>
+      return  (         
+      <div>
         <Bootstrap.Row>
             <Bootstrap.Col></Bootstrap.Col>
             <Bootstrap.Col><span>Guessed Letters</span></Bootstrap.Col>
