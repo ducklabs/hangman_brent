@@ -24,7 +24,7 @@ class MainComponent extends React.PureComponent<Props, State> {
         super(props, context);
         this.state = {
             wrongCount: 0,
-            randomWord: "Brent"
+            randomWord: "Choose a Category"
         }
         this.getCategories = this.getCategories.bind(this);
         this.randomWordFromCategory = this.randomWordFromCategory.bind(this);
