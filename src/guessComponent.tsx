@@ -20,7 +20,7 @@ class GuessComponent extends React.PureComponent<Props, any> {
     }
 
     render() {
-        
+        debugger;
       return  (         <div>
         <Bootstrap.Row>
             <Bootstrap.Col></Bootstrap.Col>
