@@ -4,6 +4,7 @@ import * as Bootstrap from 'react-bootstrap';
 import { DropdownList } from 'react-widgets';
 import HangmanImage from './hangmanImageComponent';
 import categoriesJson from './words.json';
+import GuessComponent from "./guessComponent";
 
 let categories: Record<string, Array<string>>  = categoriesJson
 
@@ -13,6 +14,7 @@ interface OwnProps {
 interface State {
     wrongCount: number;
     randomWord: string;
+    guessedLetters: string[];
 }
 
 type Props = OwnProps;
@@ -22,7 +24,9 @@ class MainComponent extends React.PureComponent<Props, State> {
         super(props, context);
         this.state = {
             wrongCount: 0,
-            randomWord: "Brent"
+            randomWord: "",
+            guessedLetters: []
+
         }
         this.getCategories = this.getCategories.bind(this);
         this.displayWordFromCategory = this.displayWordFromCategory.bind(this);
@@ -31,10 +35,9 @@ class MainComponent extends React.PureComponent<Props, State> {
     }
 
     private checkGuess(letter: string) {
-        if (this.state.randomWord.indexOf(letter) > -1)
-        {
-            alert("hello found inside your_string");
-        }
+        const newGuessList = this.state.guessedLetters;
+        newGuessList.push(letter);
+        this.setState({ guessedLetters: newGuessList });
     }
 
     private getCategories(): string[] {
@@ -44,7 +47,7 @@ class MainComponent extends React.PureComponent<Props, State> {
       private displayWordFromCategory(category: string): string {
         let possibleWords = categories[category];
         let chosenWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
-        console.log('Random word:', chosenWord);
+        this.setState({ randomWord: chosenWord });
         return chosenWord;
       }
 
@@ -79,7 +82,9 @@ class MainComponent extends React.PureComponent<Props, State> {
                             textField=""
                             />  
                     </Bootstrap.Col>
-                    <Bootstrap.Col></Bootstrap.Col>
+                    <Bootstrap.Col>
+                        <GuessComponent guessedLetters={this.state.guessedLetters} checkGuess={this.checkGuess}/>
+                    </Bootstrap.Col>
                 </Bootstrap.Row>
             <Bootstrap.Row className={"hangmanImage"}>
                 <Bootstrap.Col md={4}></Bootstrap.Col>
