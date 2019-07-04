@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import "react-widgets/lib/scss/react-widgets.scss"
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
