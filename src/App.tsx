@@ -2,17 +2,19 @@ import React from 'react';
 import './App.css';
 import * as Bootstrap from 'react-bootstrap';
 import { DropdownList } from 'react-widgets';
-import { categories } from './hangmanconstants';
+import categoriesJson from './words.json';
 
+let categories: Record<string, Array<string>>  = categoriesJson
 
 function getCategories(): string[] {
-  return Object.keys(categories)
-    .filter(k => typeof categories[k as any] === "number") as string[];
+  return Object.keys(categories);
 }
 
-function displayWordFromCategory(val: string) {
-  console.log(val);
-  return "im the word";
+function displayWordFromCategory(category: string): string {
+  let possibleWords = categories[category];
+  let chosenWord = possibleWords[Math.floor(Math.random() * possibleWords.length)];
+  console.log('Random word:', chosenWord);
+  return chosenWord;
 }
 
 const App: React.FC = () => {
@@ -35,7 +37,7 @@ const App: React.FC = () => {
             data={getCategories()}
             onChange={(val) => displayWordFromCategory(val)}
             textField=""
-            />  
+            />
         </Bootstrap.Col>
         <Bootstrap.Col></Bootstrap.Col>
       </Bootstrap.Row>
@@ -46,7 +48,7 @@ const App: React.FC = () => {
         </Bootstrap.Col>
         <Bootstrap.Col></Bootstrap.Col>
       </Bootstrap.Row>
-      
+
     </div>
   );
 }
